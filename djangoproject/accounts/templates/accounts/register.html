@@ -1,0 +1,39 @@
+{% extends 'book/shared/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="text-center">Register</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3">
+                <form method="post">
+                    <div class="form-group">
+                        <label>{{ form.username.label }}</label>
+                        {% render_field form.username class="form-control" %}
+                        {{ form.username.errors }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.password1.label }}</label>
+                        {% render_field form.password1 class="form-control" %}
+                        {{ form.password1.errors }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ form.password2.label }}</label>
+                        {% render_field form.password2 class="form-control" %}
+                        {{ form.password2.errors }}
+                    </div>
+                    <div class="form-group d-flex">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary ml-auto">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // document.querySelectorAll('input').forEach(function(e){
+        //     e.classList.add('form-control');
+        // })
+    </script>
+{% endblock content %}
+    
