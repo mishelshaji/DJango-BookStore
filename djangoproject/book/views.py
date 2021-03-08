@@ -1,4 +1,4 @@
-from django.http.response import Http404, HttpResponseNotFound
+from django.http.response import Http404, HttpResponseNotFound, JsonResponse
 from django.shortcuts import get_object_or_404, render, HttpResponse, redirect
 from django.urls import reverse_lazy
 from .forms import BookForm, CategoryForm
@@ -6,6 +6,8 @@ from .models import *
 from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 # Create your views here.
 @login_required
@@ -23,6 +25,11 @@ class BookListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user).order_by('created_on').select_related('category')
+
+def book_list_api(request):
+    books = Book.objects.all().values()
+    json_data = json.dumps(list(books), cls=DjangoJSONEncoder)
+    return HttpResponse(json_data, content_type='application/json')
 
 def populate_book_data(request):
     c = Category.objects.all().first()
