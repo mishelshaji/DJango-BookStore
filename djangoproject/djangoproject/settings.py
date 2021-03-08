@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'i4icn&3(18#^)2=pdf7all265(1o9q-wlf57(y-q*1$2usfrvz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,16 +84,28 @@ WSGI_APPLICATION = 'djangoproject.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'learndjango',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+if DEBUG == True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'learndjango',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mishelshaji$djangobooks',
+            'USER': 'mishelshaji',
+            'PASSWORD': 'Pass@123',
+            'HOST': 'mishelshaji.mysql.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
+    }
 
 
 # Password validation
@@ -137,6 +149,8 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / "assets"
 
 INTERNAL_IPS = [
     '127.0.0.1',
